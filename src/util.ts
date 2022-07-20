@@ -1,7 +1,7 @@
 import { Array2DT, MapElT } from "./types"
 
-export const mode = (arr: Array<number>): number | null => {
-    if (arr.length === 0) return null
+export const mode = (arr: Array<number>): number => {
+    if (arr.length === 0) return 0
     const mapEl: MapElT = {}
     let maxEl = arr[0]
     let maxCount = 1
@@ -57,6 +57,16 @@ export const bincountWeights = (arr: Array<number>): Array<number> => {
     return bins
 }
 
+export const shuffle = (array: Array<number>) => {
+    let currentIndex = array.length
+    let randomIndex = 0
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex--
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+    }
+}
+
 export const flatten = (arr: Array2DT): Array<number> => {
     const flattened: Array<number> = []
     for (const i of arr) flattened.concat(i[0])
@@ -71,4 +81,12 @@ export const getOneColumn = (X: Array2DT, featNro: number): [Array2DT, Array<num
         featureSample1d.push(X[sampleNro][featNro])
     }
     return [featureSample, featureSample1d]
+}
+
+export const getMultiRow = (X: Array2DT, rowIdxs: Array<number>): Array2DT => {
+    let arr: Array2DT = []
+    for (const i of rowIdxs) {
+        arr.push(X[i])
+    }
+    return arr
 }

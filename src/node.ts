@@ -3,16 +3,16 @@ import { NodePropsT } from "./types"
 export class Node {
     feature: any | undefined
     threshold: number | undefined
-    right: Node | undefined
-    left: Node | undefined
-    value: number | null
+    right: any
+    left: any
+    value: number
 
     constructor({ feature, threshold, right, left, value }: NodePropsT) {
-        this.feature = feature || null
+        this.feature = feature
         this.threshold = threshold || 0
-        this.right = right || undefined
-        this.left = left || undefined
-        this.value = value || null
+        this.right = right 
+        this.left = left
+        this.value = value || 0
     }
 
     isLeaf() {
