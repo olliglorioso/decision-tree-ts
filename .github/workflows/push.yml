@@ -3,7 +3,7 @@ name: Push to main
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build_pipeline:

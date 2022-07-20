@@ -1,4 +1,4 @@
-import { MapElT } from "./types"
+import { Array2DT, MapElT } from "./types"
 
 export const mode = (arr: Array<number>): number | null => {
     if (arr.length === 0) return null
@@ -55,4 +55,20 @@ export const bincountWeights = (arr: Array<number>): Array<number> => {
         bins.push(counts[i]) / arr.length
     }
     return bins
+}
+
+export const flatten = (arr: Array2DT): Array<number> => {
+    const flattened: Array<number> = []
+    for (const i of arr) flattened.concat(i[0])
+    return flattened
+}
+
+export const getOneColumn = (X: Array2DT, featNro: number): [Array2DT, Array<number>] => {
+    const featureSample: Array2DT = []
+    const featureSample1d: Array<number> = []
+    for (let sampleNro = 0; sampleNro < X.length; sampleNro++) {
+        featureSample.push([X[sampleNro][featNro]])
+        featureSample1d.push(X[sampleNro][featNro])
+    }
+    return [featureSample, featureSample1d]
 }

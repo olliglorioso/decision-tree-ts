@@ -16,6 +16,6 @@ export class Node {
     }
 
     isLeaf() {
-        return this.value != 0
+        return this.value !== 0
     }
 }

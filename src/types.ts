@@ -11,3 +11,5 @@ export type NodePropsT = {
     left?: Node
     value: number | null
 }
+
+export type Array2DT = Array<Array<number>>

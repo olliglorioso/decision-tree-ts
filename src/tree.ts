@@ -1,5 +1,6 @@
 import { Node } from "./node"
-import { bincountWeights, mode } from "./util"
+import { Array2DT } from "./types"
+import { bincountWeights, getOneColumn, mode } from "./util"
 
 class DecisionTree {
     maxDepth: number
@@ -16,25 +17,17 @@ class DecisionTree {
     }
 
     #isFinished(depth: number): boolean {
-        if (
-            depth >= this.maxDepth ||
-            this.classLabelsCount === 1 ||
-            this.samplesCount < this.minSplit
-        ) {
+        if (depth >= this.maxDepth || this.classLabelsCount === 1 || this.samplesCount < this.minSplit) {
             return true
         }
         return false
     }
 
-    #buildTree(
-        X: Array<Array<number>>,
-        y: Array<number>,
-        depth = 0
-    ): Node | undefined {
-        this.samplesCount, (this.featuresCount = X.length), X[0].length
-        const uniqueYs = [...new Set(y)].length
-        this.classLabelsCount = uniqueYs
+    #buildTree(X: Array2DT, y: Array<number>, depth = 0): Node | undefined {
+        ;(this.samplesCount = X.length), (this.featuresCount = X[0].length) // How many samples, how many features
+        this.classLabelsCount = [...new Set(y)].length // How many unique labels (classes)
 
+        // If the build will be finished, new node will be returned
         if (this.#isFinished(depth)) {
             const mostCommonLabel = mode(y)
             return new Node({ value: mostCommonLabel })
@@ -42,8 +35,8 @@ class DecisionTree {
     }
 
     #entropy(y: Array<number>): number {
-        // Calculate the gini impurity, this helps us to decide wether to include or not include this
-        // feature in the decision tree.
+        // Calculate entropy: average level of information within given labels. The amount of different labels affects the entropy, in this situation.
+        // The more similar labels, the better the result = entropy.
         const proportions = bincountWeights(y)
         const proportionsSum =
             -1 *
@@ -54,45 +47,50 @@ class DecisionTree {
         return proportionsSum
     }
 
-    #split(X: Array<Array<number>>, thresh: number) {}
-    #informationGain(
-        X: Array<Array<number>>,
-        y: Array<number>,
-        thresh: number
-    ) {
-        const parentLoss = this.#entropy(y)
-        return 0
+    #split(featureSample: Array2DT, thresh: number): [number, number] {
+        const leftIdx: Array<number> = []
+        const rightIdx: Array<number> = []
+        for (const i of featureSample) {
+            if (i[0] <= thresh) {
+                leftIdx.push(i[0])
+                rightIdx.push(i[0])
+            }
+        }
+        return [leftIdx, rightIdx]
     }
-    #bestSplit(
-        X: Array<Array<number>>,
-        y: Array<number>,
-        features: Array<number>
-    ) {
+
+    #informationGain(featureSample: Array2DT, y: Array<number>, thresh: number): number {
+        const parentEntropy = this.#entropy(y)
+        const [leftIdx, rightIdx] = this.#split(featureSample, thresh)
+        const leftChildEntropy = 0
+        const rightChildEntropy = 0
+        // This is the definition of information gain.
+        return parentEntropy - leftChildEntropy - rightChildEntropy
+    }
+    
+    #bestSplit(X: Array2DT, y: Array<number>): [number, number] {
         const split = { score: -1, feat: 0, thresh: 0 }
-
-        for (const feat of features) {
-            const featureColumn: Array<Array<number>> = []
-            for (let i = 0; i < X.length; i++) {
-                featureColumn[i] = [X[i][feat]]
-                const thresholds = [...new Set(featureColumn[0])]
-                for (const thresh of thresholds) {
-                    const score = this.informationGain(featureColumn, y, thresh)
-
-                    if (score > split.score) {
-                        split.score = score
-                        split.feat = feat
-                        split.thresh = thresh
-                    }
+        for (let featIdx = 0; featIdx < X[0].length; featIdx++) {
+            const [featureSample, featureSample1d] = getOneColumn(X, featIdx)
+            // All different feature values in the column.
+            const thresholds = [...new Set(featureSample1d)]
+            for (const thresh of thresholds) {
+                const score = this.#informationGain(featureSample, y, thresh)
+                if (score > split.score) {
+                    split.score = score
+                    split.feat = featIdx
+                    split.thresh = thresh
                 }
             }
         }
+        return [split.feat, split.thresh]
     }
 
-    traverse(x: number, node: Node) {}
-    fit(X: Array<Array<number>>, y: Array<number>) {
-        this.root = this.#buildTree(X, y)
-    }
-    predict(X: Array<Array<number>>) {}
+    // traverse(x: number, node: Node) {}
+    // fit(X: Array2DT, y: Array<number>) {
+    //     this.root = this.#buildTree(X, y)
+    // }
+    // predict(X: Array2DT) {}
 }
 
 export default DecisionTree
