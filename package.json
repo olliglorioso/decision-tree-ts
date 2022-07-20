@@ -8,6 +8,7 @@
         "build": "tsc",
         "test": "jest",
         "lint": "eslint src",
+        "fix": "eslint src --fix",
         "format": "prettier --write \"**/*.+(js|ts|json)\""
     },
     "author": "Olli Glorioso",

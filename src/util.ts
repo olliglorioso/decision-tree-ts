@@ -2,10 +2,10 @@ import { MapElT } from "./types"
 
 export const mode = (arr: Array<number>): number | null => {
     if (arr.length === 0) return null
-    let mapEl: MapElT = {}
+    const mapEl: MapElT = {}
     let maxEl = arr[0]
     let maxCount = 1
-    
+
     for (let i = 0; i < arr.length; i++) {
         const el = arr[i]
         if (mapEl[el] === null || mapEl[el] === undefined) {
@@ -29,7 +29,7 @@ const maxValue = (arr: Array<number>): number => {
 export const bincount = (arr: Array<number>): Array<number> => {
     if (arr.length === 0) return [0]
     const maxNumber = maxValue(arr)
-    let bins: Array<number> = []
+    const bins: Array<number> = []
     const counts = calculateCounts(arr)
     for (let i = 0; i <= maxNumber; i++) {
         bins.push(counts[i])
@@ -38,17 +38,17 @@ export const bincount = (arr: Array<number>): Array<number> => {
 }
 
 export const calculateCounts = (arr: Array<number>): MapElT => {
-    let counts: MapElT = {}
+    const counts: MapElT = {}
     for (const num of arr) {
         counts[num] = counts[num] ? counts[num] + 1 : 1
     }
     return counts
-} 
+}
 
 export const bincountWeights = (arr: Array<number>): Array<number> => {
     if (arr.length === 0) return [0]
     const maxNumber = maxValue(arr)
-    let bins: Array<number> = []
+    const bins: Array<number> = []
     const counts = calculateCounts(arr)
     for (let i = 0; i <= maxNumber; i++) {
         // Divide by the length of array instead of calculating the regular bincount.

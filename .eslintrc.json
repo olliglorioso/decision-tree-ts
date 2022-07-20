@@ -20,6 +20,6 @@
         "quotes": ["error", "double"],
         "indent": ["error", 4],
         "semi": ["error", "never"],
-        "linebreak-style": ["error", "unix"],
+        "linebreak-style": ["error", "unix"]
     }
 }
