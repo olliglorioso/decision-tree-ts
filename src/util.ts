@@ -52,7 +52,7 @@ export const bincountWeights = (arr: Array<number>): Array<number> => {
     const counts = calculateCounts(arr)
     for (let i = 0; i <= maxNumber; i++) {
         // Divide by the length of array instead of calculating the regular bincount.
-        bins.push(counts[i]) / arr.length
+        bins.push((counts[i] || 0) / arr.length)
     }
     return bins
 }
@@ -61,9 +61,9 @@ export const shuffle = (array: Array<number>) => {
     let currentIndex = array.length
     let randomIndex = 0
     while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex--
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        ;[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
     }
 }
 
@@ -84,7 +84,7 @@ export const getOneColumn = (X: Array2DT, featNro: number): [Array2DT, Array<num
 }
 
 export const getMultiRow = (X: Array2DT, rowIdxs: Array<number>): Array2DT => {
-    let arr: Array2DT = []
+    const arr: Array2DT = []
     for (const i of rowIdxs) {
         arr.push(X[i])
     }

@@ -3,11 +3,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "eslint:recommended", 
-        "plugin:@typescript-eslint/recommended", 
-        "plugin:prettier/recommended"
-    ],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -20,6 +16,6 @@
         "quotes": ["error", "double"],
         "indent": ["error", 4],
         "semi": ["error", "never"],
-        "linebreak-style": ["error", "unix"],
+        "linebreak-style": ["error", "unix"]
     }
 }
