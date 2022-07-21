@@ -9,6 +9,11 @@ class DecisionTree {
     classLabelsCount = 0
     samplesCount = 0
 
+    /**
+     * Create a decision tree model based on the CART-algorithm.
+     * @param {number} maxDepth Defaults to 100.
+     * @param {number} minSplit Defaults to 2.
+     */
     constructor(maxDepth = 100, minSplit = 2) {
         this.maxDepth = maxDepth
         this.minSplit = minSplit
@@ -108,11 +113,26 @@ class DecisionTree {
         return this.#traverse(x, node.right as Node)
     }
 
-    fit(X: Array2DT, y: Array<number>) {
-        this.root = this.#buildTree(X, y)
+    /**
+     * Train the model with your values and their corresponding labels.
+     * @param {Array<Array<number>>} X Train values.
+     * @param {Array<number>} y Labels.
+     * @returns {unknown} Returns an error if something went wrong.
+     */
+    fit(X: Array2DT, y: Array<number>): unknown | void {
+        try {
+            this.root = this.#buildTree(X, y)
+        } catch (err) {
+            return err
+        }
     }
 
-    predict(X: Array2DT) {
+    /**
+     * Predict the labels with the trained model.
+     * @param {Array<number<number>>} X Values to predict label for in 2x2-matrix.
+     * @returns {Array<number>} Labels for the individual rows.
+     */
+    predict(X: Array2DT): Array<number | void> {
         return X.map((x) => this.#traverse(x, this.root as Node))
     }
 }
