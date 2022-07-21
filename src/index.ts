@@ -1,2 +1,3 @@
-const hello = () => "hello world"
-export default hello
+import DecisionTree from "./tree"
+
+export default DecisionTree

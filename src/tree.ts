@@ -117,11 +117,12 @@ class DecisionTree {
      * Train the model with your values and their corresponding labels.
      * @param {Array<Array<number>>} X Train values.
      * @param {Array<number>} y Labels.
-     * @returns {unknown} Returns an error if something went wrong.
+     * @returns {unknown | boolean} Returns an error if something went wrong. Otherwise true.
      */
-    fit(X: Array2DT, y: Array<number>): unknown | void {
+    fit(X: Array2DT, y: Array<number>): unknown | boolean {
         try {
             this.root = this.#buildTree(X, y)
+            return true
         } catch (err) {
             return err
         }

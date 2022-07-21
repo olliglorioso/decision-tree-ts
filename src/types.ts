@@ -13,3 +13,10 @@ export type NodePropsT = {
 }
 
 export type Array2DT = Array<Array<number>>
+
+export type TrainAndTestT = {
+    trainValues: Array2DT
+    trainLabels: Array<number>
+    testValues: Array2DT
+    testLabels: Array<number>
+}

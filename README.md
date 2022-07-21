@@ -10,6 +10,7 @@ Basic, dependency-free and light-weight decision tree algorithm npm-module, use 
   - Currently only numerical features supported.
 - JSDoc included to make the use of the module as easy as possible.
 - To get some useful functions, check out my [other repository](https://github.com/olliglorioso/linear-regression-ts). I am not going to redo them for this module.
+- Package is tested to be working (Tensorflow.js utilized in the automated tests).
 
 ## Quick start
 

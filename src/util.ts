@@ -90,3 +90,12 @@ export const getMultiRow = (X: Array2DT, rowIdxs: Array<number>): Array2DT => {
     }
     return arr
 }
+
+export const arraySimilarity = (x: Array<number>, y: Array<number>): [number, number] => {
+    if (x.length !== y.length) throw new Error("Lists must have the same length.")
+    let howManySame = 0
+    for (let i = 0; i < x.length; i++) {
+        if (x[i] == y[i]) howManySame++
+    }
+    return [howManySame / x.length, howManySame]
+}
