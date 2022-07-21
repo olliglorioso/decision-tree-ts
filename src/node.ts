@@ -1,10 +1,10 @@
 import { NodePropsT } from "./types"
 
 export class Node {
-    feature: any
+    feature: number | undefined
     threshold: number | undefined
-    right: any
-    left: any
+    right: Node | undefined
+    left: Node | undefined
     value: number | null
 
     constructor({ feature, threshold, right, left, value }: NodePropsT) {

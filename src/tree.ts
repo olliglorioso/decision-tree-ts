@@ -100,12 +100,12 @@ class DecisionTree {
         return new Node({ feature: bestFeature, threshold: bestTreshold, left, right })
     }
 
-    #traverse(x: Array<number>, node: any): any {
+    #traverse(x: Array<number>, node: Node): void | number {
         if (node.isLeaf()) {
-            return node.value
+            return node.value as number // Since isLeaf() is true, node.value must be a number, so this is true.
         }
-        if (x[node.feature] <= (node.threshold || 0)) return this.#traverse(x, node.left)
-        return this.#traverse(x, node.right)
+        if (x[node.feature as number] <= (node.threshold || 0)) return this.#traverse(x, node.left as Node)
+        return this.#traverse(x, node.right as Node)
     }
 
     fit(X: Array2DT, y: Array<number>) {
@@ -113,7 +113,7 @@ class DecisionTree {
     }
 
     predict(X: Array2DT) {
-        return X.map((x) => this.#traverse(x, this.root))
+        return X.map((x) => this.#traverse(x, this.root as Node))
     }
 }
 
