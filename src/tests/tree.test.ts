@@ -26,6 +26,5 @@ test("Test the decision tree with Haberman data", async () => {
     tree.fit(trainValues, trainLabels)
     const predictions = tree.predict(testValues)
     const accuracy = arraySimilarity(testLabels, predictions as Array<number>)
-    expect(accuracy).toBeGreaterThan(0.6)
-    console.log(accuracy)
+    expect(accuracy[0]).toBeGreaterThan(0.6)
 })
