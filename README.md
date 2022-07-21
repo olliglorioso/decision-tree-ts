@@ -7,6 +7,7 @@ Basic, dependency-free and light-weight decision tree algorithm npm-module, use 
 - DecisionTree-class, check Quick start to check how to use.
   - Currently only CART-algorithm is supported.
   - Functions fit and predict are public for your use.
+  - Currently only numerical features supported.
 - JSDoc included to make the use of the module as easy as possible.
 - To get some useful functions, check out my [other repository](https://github.com/olliglorioso/linear-regression-ts). I am not going to redo them for this module.
 
