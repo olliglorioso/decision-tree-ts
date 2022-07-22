@@ -1,6 +1,6 @@
 {
     "name": "decision-tree-ts",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "TS/JS npm module to train and use a decision tree machine learning model.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
