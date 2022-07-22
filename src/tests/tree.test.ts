@@ -21,10 +21,19 @@ test("Test the decision tree with Haberman data", async () => {
             labels.push(survivalStatus)
         }
     }
-    const { trainValues, testValues, trainLabels, testLabels } = trainAndTestSets({ inputs: data, labels, ratio: 30 })
-    const tree = new DecisionTree(10, 2)
-    tree.fit(trainValues, trainLabels)
-    const predictions = tree.predict(testValues)
-    const accuracy = arraySimilarity(testLabels, predictions as Array<number>)
-    expect(accuracy[0]).toBeGreaterThan(0.6)
+
+    let i = 0
+    let sum = 0
+    while (i < 10) {
+        const { trainValues, testValues, trainLabels, testLabels } = trainAndTestSets({ inputs: data, labels, ratio: 30 })
+        const tree = new DecisionTree(100, 2)
+        tree.fit(trainValues, trainLabels)
+        const predictions = tree.predict(testValues)
+        const accuracy = arraySimilarity(testLabels, predictions as Array<number>)
+        sum += accuracy[0]
+        i += 1
+    }
+    const totalAcc = sum / 10
+    console.log(totalAcc)
+    expect(totalAcc).toBeGreaterThan(0.6)
 })

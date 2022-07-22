@@ -9,7 +9,7 @@ export type NodePropsT = {
     threshold?: number
     right?: Node
     left?: Node
-    value?: number
+    value?: number | null
 }
 
 export type Array2DT = Array<Array<number>>

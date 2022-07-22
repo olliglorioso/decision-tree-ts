@@ -21,6 +21,7 @@ npm install decision-tree-ts
 ```typescript
 // Initialize the tree with parameters maxDepth, minSplit.
 const tree = DecisionTree(10, 2)
+// Training data.
 const data = [
     [1, 3],
     [2, 3],
@@ -29,10 +30,9 @@ const data = [
     [2, 3],
 ]
 const labels = [1, 1, 2, 2, 3]
-// Train the model by giving the training data and their labels. Every column is one feature in the data.
-const response = tree.fit(data, labels)
-// Response is true if the training succeeded, otherwise returns an error message.
-console.log(response === true ? "Training succeeded." : "Error:", response)
+// Train the model by giving the training data and their labels. 
+tree.fit(data, labels)
+// Prediction data.
 const predictThisData = [
     [1, 3],
     [2, 3],

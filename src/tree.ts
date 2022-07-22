@@ -29,6 +29,9 @@ class DecisionTree {
             rightIdxs: Array<number> = [],
             leftLabels: Array<number> = [],
             rightLabels: Array<number> = []
+        if (y.length === 2 && featureSample.length === 2) {
+            return [[0], [1], [y[0]], [y[1]]]
+        }
         for (let i = 0; i < featureSample.length; i++) {
             if (featureSample[i][0] <= thresh) {
                 leftIdxs.push(i)
@@ -81,13 +84,12 @@ class DecisionTree {
         return [split.feat, split.thresh]
     }
 
-    #buildTree(X: Array2DT, y: Array<number>, depth = 0): Node | undefined {
+    #buildTree(X: Array2DT, y: Array<number>, depth = 0): Node {
         this.samplesCount = X.length
         const featuresCount = (X[0] || X).length
         this.classLabelsCount = [...new Set(y)].length // How many unique labels (classes)
         if (this.#isFinished(depth)) {
-            const mostCommonLabel = mode(y)
-            return new Node({ value: mostCommonLabel })
+            return new Node({ value: mode(y) })
         }
         // If the build will be finished, new node will be returned
         const arr = [...Array(featuresCount).keys()]
@@ -96,7 +98,6 @@ class DecisionTree {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [bestFeatureColumn, _bestFeatureColumn1d] = getOneColumn(X, bestFeature)
         const [leftIdxs, rightIdxs, leftLabels, rightLabels] = this.#split(bestFeatureColumn, bestTreshold, y)
-
         const leftRows = getMultiRow(X, leftIdxs)
         const rightRows = getMultiRow(X, rightIdxs)
         const left = this.#buildTree(leftRows, leftLabels, depth + 1)
@@ -105,7 +106,7 @@ class DecisionTree {
         return new Node({ feature: bestFeature, threshold: bestTreshold, left, right })
     }
 
-    #traverse(x: Array<number>, node: Node): void | number {
+    #traverse(x: Array<number>, node: Node): number {
         if (node.isLeaf()) {
             return node.value as number // Since isLeaf() is true, node.value must be a number, so this is true.
         }
@@ -117,20 +118,14 @@ class DecisionTree {
      * Train the model with your values and their corresponding labels.
      * @param {Array<Array<number>>} X Train values.
      * @param {Array<number>} y Labels.
-     * @returns {unknown | boolean} Returns an error if something went wrong. Otherwise true.
      */
-    fit(X: Array2DT, y: Array<number>): unknown | boolean {
-        try {
-            this.root = this.#buildTree(X, y)
-            return true
-        } catch (err) {
-            return err
-        }
+    fit(X: Array2DT, y: Array<number>) {
+        this.root = this.#buildTree(X, y)
     }
 
     /**
      * Predict the labels with the trained model.
-     * @param {Array<number<number>>} X Values to predict label for in 2x2-matrix.
+     * @param {Array<Array<number>>} X Values to predict label for in 2x2-matrix.
      * @returns {Array<number>} Labels for the individual rows.
      */
     predict(X: Array2DT): Array<number | void> {

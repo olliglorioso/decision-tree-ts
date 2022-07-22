@@ -1,7 +1,7 @@
 import { Array2DT, MapElT } from "./types"
 
-export const mode = (arr: Array<number>): number => {
-    if (arr.length === 0) return 0
+export const mode = (arr: Array<number>): number | null => {
+    if (arr.length === 0) return null
     const mapEl: MapElT = {}
     let maxEl = arr[0]
     let maxCount = 1
